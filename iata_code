@@ -1,0 +1,80 @@
+<?php
+/**
+ * Template Name: IATA_Codes
+ * Template Post Type: post, page
+ *
+ * @package WordPress
+ * @subpackage Twenty_Twenty
+ * @since Twenty Twenty 1.0
+ */
+get_header();?>
+<?php
+    $con = mysqli_connect("localhost","wptyourbestwayho_user_v11","hGNm1URm","wptyourbestwayho_wpt_v11");
+    function fetchData($con)
+    {
+        $query = "SELECT * FROM wpk4_backend_iata_codes";
+        $results = mysqli_query($con, $query);
+        return $results;
+    }
+    $results = fetchData($con);
+?>
+<div style="display: grid;
+    justify-content: center;">
+    <div>
+        <h1 class="text-center" style="margin: 25px 0 !important;">IATA <span style="color:#ffba10;">Airline</span> codes</h1>
+    </div>
+    <div>
+        <form action="" method="post">
+            <table class="table text-center" style="width:100%; margin:auto; border:1px solid #adadad;">
+                <tr>
+                    
+                    
+                </tr>
+                <tr>
+                    <button type="submit">Filter Data</button>
+                </tr>
+            </table>
+        </form>
+        <form style="margin-bottom:50px;" action="" method="get">
+            <table class="table" style="width:50%; margin:auto; border:1px solid #adadad;">
+                <tr>
+                    <td style="width: 75%;">
+                        <label for="iata_code" style="color: black; font-weight: 600;">Client id :</label>
+                        <input type="text" name="iata_code" id="iata_code" placeholder="Enter Airline Code">
+                    </td>
+                    <td style="width: 25%;">
+                        <label for="iata_airline_name" style="color: black; font-weight: 600;">Type of remark :</label>
+                        <input type="text" name="iata_airline_name" id="iata_airline_name" placeholder="Enter Airlines Names">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan='9' style='text-align:center;'>
+                        <button style='padding: 8px 20px; font-size: 15px;' type="submit" >Search</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div>
+        <table class="table text-center" style="width:100%; margin:auto; border:1px solid #adadad;">
+        	<tr>
+        	    <th>Sr/no</th>
+        		<th>IATA code – MAWB</th>
+        		<th>IATA code</th>
+        		<th>IATA airlines</th>
+        	</tr>
+            <tr>
+                    <?php $val=1; foreach($results as $row): ?>
+                        <tr>
+                            <td><?php echo $val ?></td>
+                            <td>IATA-<?php echo $row['iata_id']?></td>
+                            <td>IATA-<?php echo $row['iata_code']?></td>
+                            <td><?php echo $row['airline_name']?></td>
+                        </tr>
+                        <?php $val++; ?>
+                <?php endforeach;?>
+            </tr>
+        </table>
+    </div>
+</div>
+<?php get_footer(); ?>
